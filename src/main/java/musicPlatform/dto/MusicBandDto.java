@@ -15,6 +15,7 @@ public class MusicBandDto {
                     // Getters and setters, toString, equals, hashCod//
     //---------------------------------------------------------------------------------------------//
 
+
     public Long getMusicStilesId() {
         return musicStilesId;
     }

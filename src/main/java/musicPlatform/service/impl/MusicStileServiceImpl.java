@@ -2,14 +2,14 @@ package musicPlatform.service.impl;
 
 import musicPlatform.converter.MusicStileConverter;
 import musicPlatform.dao.MusicStileRepo;
-import musicPlatform.dto.MusicBandDto;
 import musicPlatform.dto.MusicStileDto;
+import musicPlatform.entity.MusicStileEntity;
 import musicPlatform.service.MusicStileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class MusicStileServiceImpl implements MusicStileService {
@@ -35,8 +35,14 @@ public class MusicStileServiceImpl implements MusicStileService {
 
     @Override
     public Set<MusicStileDto> getAllMusicStile() {
-        return musicStileRepo.findAll().stream().map(x -> musicStileConverter.convertEntityToDto(x)).collect(Collectors.toSet());
-    }
+        Set<MusicStileDto> msdSet = new HashSet<>();
+        Iterable<MusicStileEntity> mte = musicStileRepo.findAll();
+
+        for (MusicStileEntity x: mte
+        ) {
+            msdSet.add(musicStileConverter.convertEntityToDto(x));
+        }
+        return msdSet;        }
     @Override
     public void saveMusicStile(MusicStileDto musicStileDto) {
         musicStileRepo.save(musicStileConverter.convertDtoToEntity(musicStileDto));
@@ -44,7 +50,7 @@ public class MusicStileServiceImpl implements MusicStileService {
 
     @Override
     public void updateMusicStile(MusicStileDto musicStileDto) {
-        musicStileRepo.saveAndFlush(musicStileConverter.convertDtoToEntity(musicStileDto));
+        musicStileRepo.save(musicStileConverter.convertDtoToEntity(musicStileDto));
     }
 
     @Override

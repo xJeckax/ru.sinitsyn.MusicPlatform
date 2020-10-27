@@ -3,11 +3,14 @@ package musicPlatform.service.impl;
 import musicPlatform.converter.MusicAlbumConverter;
 import musicPlatform.dao.MusicAlbumRepo;
 import musicPlatform.dto.MusicAlbumDto;
+import musicPlatform.dto.MusicTrackDto;
 import musicPlatform.entity.MusicAlbumEntity;
+import musicPlatform.entity.MusicTrackEntity;
 import musicPlatform.service.MusicAlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,7 +38,15 @@ public class MusicAlbumServiceImpl implements MusicAlbumService {
 
     @Override
     public Set<MusicAlbumDto> getAllMusicAlbum() {
-        return musicAlbumRepo.findAll().stream().map(x -> musicAlbumConverter.convertEntityToDto(x)).collect(Collectors.toSet());
+        Set<MusicAlbumDto> madSet = new HashSet<>();
+
+        Iterable<MusicAlbumEntity> mte = musicAlbumRepo.findAll();
+
+        for (MusicAlbumEntity x: mte
+        ) {
+            madSet.add(musicAlbumConverter.convertEntityToDto(x));
+        }
+        return madSet;
     }
 
     @Override

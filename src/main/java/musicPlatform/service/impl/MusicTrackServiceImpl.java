@@ -3,10 +3,13 @@ package musicPlatform.service.impl;
 import musicPlatform.converter.MusicTrackConverter;
 import musicPlatform.dao.MusicTrackRepo;
 import musicPlatform.dto.MusicTrackDto;
+import musicPlatform.entity.MusicTrackEntity;
 import musicPlatform.service.MusicTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,7 +38,14 @@ public class MusicTrackServiceImpl implements MusicTrackService {
 
     @Override
     public Set<MusicTrackDto> getAllMusicTrack() {
-        return musicTrackRepo.findAll().stream().map(x -> musicTrackConverter.convertEntityToDto(x)).collect(Collectors.toSet());
+        Set<MusicTrackDto> mteSet = new HashSet<>();
+        Iterable<MusicTrackEntity> mte = musicTrackRepo.findAll();
+
+        for (MusicTrackEntity x: mte
+             ) {
+            mteSet.add(musicTrackConverter.convertEntityToDto(x));
+        }
+        return mteSet;
     }
 
     @Override
@@ -45,6 +55,7 @@ public class MusicTrackServiceImpl implements MusicTrackService {
 
     @Override
     public void updateMusicTrack(MusicTrackDto musicTrackDto) throws Exception {
+
         musicTrackRepo.save(musicTrackConverter.convertDtoToEntity(musicTrackDto));
     }
 

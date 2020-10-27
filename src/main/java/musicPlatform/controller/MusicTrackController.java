@@ -34,6 +34,16 @@ public class MusicTrackController {
         musicTrackService.saveMusicTrack(musicTrackDto);
     }
 
+    @PutMapping
+    public void updateTrackById(@RequestBody MusicTrackDto musicTrackDto){
+
+        try {
+            musicTrackService.updateMusicTrack(musicTrackDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @DeleteMapping(value = "/{id}")
     public void deleteTrack(@PathVariable("id") Long id){
         musicTrackService.deleteMusicTrack(id);

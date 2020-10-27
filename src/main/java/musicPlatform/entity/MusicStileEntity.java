@@ -15,9 +15,9 @@ public class MusicStileEntity {
     @Column(name = "stileId")
     private Long stileId;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "musicStile",unique = true)
+    @Column(name = "musicStile")
     private MusicStile musicStile;
-    @ManyToMany(mappedBy = "musicStilesId")
+    @OneToMany(mappedBy = "musicStilesId")
     @Column(name = "musicBandId", nullable = true)
     private Set<MusicBandEntity> musicBandId = new HashSet<>();
     //---------------------------------------------------------------------------------------------//

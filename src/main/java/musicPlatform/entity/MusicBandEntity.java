@@ -19,23 +19,26 @@ public class MusicBandEntity {
     @OneToMany(mappedBy = "musicBandId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Column(name = "MusicAlbums")
     private Set<MusicAlbumEntity> musicAlbums = new HashSet<>();
-    @ManyToMany
-    @Column(name = "musicStilesId")
-    @JoinTable(
+    @ManyToOne
+
+    @JoinColumn(name = "stileId")
+    /*@JoinTable(
             name = "stileBand", joinColumns = {@JoinColumn(name = "musicBandId")},
             inverseJoinColumns = {@JoinColumn(name = "stileId")}
-    )
-    private Set<MusicStileEntity> musicStilesId = new HashSet<>();
+    )*/
+    private MusicStileEntity musicStilesId;
     //---------------------------------------------------------------------------------------------//
                     // Getters and setters, toString, equals, hashCod//
     //---------------------------------------------------------------------------------------------//
-    public Set<MusicStileEntity> getMusicStilesId() {
+
+    public MusicStileEntity getMusicStilesId() {
         return musicStilesId;
     }
 
-    public void setMusicStilesId(Set<MusicStileEntity> musicStilesId) {
+    public void setMusicStilesId(MusicStileEntity musicStilesId) {
         this.musicStilesId = musicStilesId;
     }
+
     public Set<MusicAlbumEntity> getMusicAlbums() {
         return musicAlbums;
     }

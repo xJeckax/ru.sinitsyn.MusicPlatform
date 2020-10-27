@@ -3,12 +3,13 @@ package musicPlatform.service.impl;
 import musicPlatform.converter.MusicBandConverter;
 import musicPlatform.dao.MusicBandRepo;
 import musicPlatform.dto.MusicBandDto;
+import musicPlatform.entity.MusicBandEntity;
 import musicPlatform.service.MusicBandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class MusicBandServiceImpl implements MusicBandService {
@@ -34,7 +35,14 @@ public class MusicBandServiceImpl implements MusicBandService {
 
     @Override
     public Set<MusicBandDto> getAllMusicBand() {
-        return musicBandRepo.findAll().stream().map(x -> musicBandConverter.convertEntityToDto(x)).collect(Collectors.toSet());
+        Set<MusicBandDto> mbdSet = new HashSet<>();
+        Iterable<MusicBandEntity> mte = musicBandRepo.findAll();
+
+        for (MusicBandEntity x: mte
+        ) {
+            mbdSet.add(musicBandConverter.convertEntityToDto(x));
+        }
+        return mbdSet;
     }
 
     @Override
@@ -44,7 +52,7 @@ public class MusicBandServiceImpl implements MusicBandService {
 
     @Override
     public void updateMusicBand(MusicBandDto musicBandDto) {
-        musicBandRepo.saveAndFlush(musicBandConverter.convertDtoToEntity(musicBandDto));
+        musicBandRepo.save(musicBandConverter.convertDtoToEntity(musicBandDto));
     }
 
     @Override
